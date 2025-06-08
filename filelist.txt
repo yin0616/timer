@@ -1,0 +1,115 @@
+from flask import Flask, request, jsonify, session, render_template, redirect
+import sqlite3
+from flask_cors import CORS
+
+app = Flask(__name__)
+app.secret_key = 'meowpower123'
+CORS(app)
+
+# 初始化資料庫
+def init_db():
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            nickname TEXT,
+            bio TEXT,
+            avatar TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_db()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html')
+
+@app.route('/signup', methods=['GET'])
+def signup_page():
+    return render_template('signup.html')
+
+@app.route('/profile')
+def profile_page():
+    if 'username' not in session:
+        return redirect('/login')
+    return render_template('profile.html')
+
+@app.route('/session')
+def get_session():
+    if 'username' in session:
+        return jsonify({"logged_in": True, "username": session['username']})
+    return jsonify({"logged_in": False})
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+        conn.commit()
+        return jsonify({"success": True})
+    except sqlite3.IntegrityError:
+        return jsonify({"success": False, "message": "帳號已存在"})
+    finally:
+        conn.close()
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
+    user = cursor.fetchone()
+    conn.close()
+    if user:
+        session['username'] = username
+        return jsonify({"success": True, "username": username})
+    else:
+        return jsonify({"success": False, "message": "帳號或密碼錯誤"})
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('username', None)
+    return jsonify({"success": True})
+
+@app.route('/update-profile', methods=['POST'])
+def update_profile():
+    if 'username' not in session:
+        return jsonify({"success": False, "message": "未登入"})
+    data = request.get_json()
+    nickname = data.get('nickname')
+    bio = data.get('bio')
+    password = data.get('password')
+
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    try:
+        if nickname:
+            cursor.execute("UPDATE users SET nickname = ? WHERE username = ?", (nickname, session['username']))
+        if bio:
+            cursor.execute("UPDATE users SET bio = ? WHERE username = ?", (bio, session['username']))
+        if password:
+            cursor.execute("UPDATE users SET password = ? WHERE username = ?", (password, session['username']))
+        conn.commit()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)})
+    finally:
+        conn.close()
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5050)

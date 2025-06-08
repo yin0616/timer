@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/index.css">
+  <title>MeowMemeBook</title>
+  <style>
+    .hamburger {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      margin-right: 8px;
+      color: white; /* 這一行新增 */
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px;
+      width: 200px;
+      height: 100%;
+      background-color: #2c2c2c;
+      padding-top: 60px;
+      transition: 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 16px;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      background-color: #a6a6a6;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #1e1e1e;
+      color: white;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- 側邊欄 -->
+  <div class="sidebar" id="sidebar">
+    <a href="/">home</a>
+    <a href="/memeupload">memeupload</a>
+    <a href="/profile">profile</a>
+  </div>
+
+  <header class="header">
+    <div class="logo">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <span style="font-size: 20px; font-weight: bold;">MeowMemeBook</span>
+    </div>
+
+    <form action="#" class="searchBar">
+      <input type="text" placeholder="search">
+      <button id="searchbutton" type="submit">
+        <i class='bx bx-search-alt'></i>
+      </button>
+    </form>
+
+    <div class="auth-buttons">
+      {% if username %}
+        <div class="user-dropdown">
+          <div class="username-label" onclick="toggleDropdown()">
+            {{ username }} 
+          </div>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <button id="logout-btn" class="dropdown-item">Logout</button>
+          </div>
+        </div>
+        <a href="/memeupload" class="auth-btn">+</a>
+      {% else %}
+        <a href="/login" class="auth-btn">login</a>
+        <a href="/signup" class="auth-btn">signup</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="meme-grid">
+    {% for meme in memes %}
+    <div class="meme-card">
+      <img src="{{ meme.image_path }}" alt="{{ meme.title }}">
+      <div class="meme-info">
+        <h3>{{ meme.title }}</h3>
+        <p class="desc">{{ meme.description }}</p>
+        <div class="meta">
+          👤 {{ meme.username or '匿名' }} ‧ 🕒 {{ meme.upload_time[:10] }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const menu = document.getElementById("dropdownMenu");
+      if (menu) {
+        menu.classList.toggle("show");
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("open");
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".user-dropdown")) {
+        document.getElementById("dropdownMenu")?.classList.remove("show");
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const logoutBtn = document.getElementById("logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          fetch("/logout", { method: "POST" })
+            .then(res => res.json())
+            .then(() => window.location.href = "/")
+            .catch(err => console.error(" Logout error:", err));
+        });
+      }
+    });
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("open");
+    }
+
+    // 點畫面其他地方時，如果 sidebar 是打開的，就收起來
+    document.addEventListener("click", function (e) {
+      const sidebar = document.getElementById("sidebar");
+      const hamburger = document.querySelector(".hamburger");
+
+      // 如果點擊的不是 sidebar 裡面的東西，也不是漢堡按鈕，就收起來
+      if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+        sidebar.classList.remove("open");
+      }
+    });
+    
+  </script>
+</body>
+</html>

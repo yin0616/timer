@@ -1,0 +1,109 @@
+body {
+    background-color: #1e1e1e;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+  }
+  
+  .login-container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 20px;
+    width: 300px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    text-align: center;
+  }
+  
+  .login-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .login-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .login-container input {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .login-container button {
+    padding: 10px;
+    background: linear-gradient(135deg, #7F7FD5, #91EAE4);
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .login-container p {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .login-container a {
+    color: #91EAE4;
+    text-decoration: none;
+  }
+
+  body.light-mode {
+    background-color: #f5f5f5;
+    color: #111;
+  }
+  
+  body.light-mode input,
+  body.light-mode textarea {
+    background-color: #fff;
+    color: #111;
+    border: 1px solid #ccc;
+  }
+  
+  body.light-mode .login-container,
+  body.light-mode .profile-card {
+    background: rgba(255, 255, 255, 0.9);
+    color: #111;
+  }
+  
+  body.light-mode button {
+    background: linear-gradient(135deg, #86A8E7, #7F7FD5);
+    color: black;
+  }
+
+  .theme-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;                  /* 用 flex 完全置中 */
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 999;
+    transition: all 0.2s ease;
+  }
+  
+  .theme-btn i {
+    font-size: 22px;
+    line-height: 1;
+  }
+  .theme-btn:hover {
+    background: rgba(140, 191, 245, 0.3);  /* 滑鼠滑過 → 背景變亮一點 */
+  }

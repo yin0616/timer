@@ -1,0 +1,92 @@
+/* 頁面背景與文字設定 */
+body {
+    margin: 0;
+    padding: 0;
+    background: #1e1e1e;
+    font-family: Arial, sans-serif;
+    color: white;
+  }
+  
+  /* 外層主排版 */
+  .profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    padding: 60px;
+    flex-wrap: wrap;
+  }
+  
+  /* 左邊卡片（頭像 + 名字 + 更換） */
+  .profile-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* 頭像圖示 */
+  .avatar-wrap img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    margin-bottom: 10px;
+  }
+  
+  /* 上傳按鈕 */
+  .upload-btn {
+    display: inline-block;
+    margin-top: 12px;
+    background: linear-gradient(135deg, #7F7FD5, #91EAE4);
+    color: #000;
+    padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s ease;
+  }
+  .upload-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* 使用者名稱 */
+  .username {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #eee;
+  }
+  
+  /* 右邊表單欄位 */
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 400px;
+  }
+  
+  .profile-form label {
+    font-size: 15px;
+    color: #ccc;
+  }
+  
+  .profile-form textarea {
+    height: 150px;
+    background: rgba(255,255,255,0.07);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    color: white;
+    font-size: 15px;
+    resize: none;
+    outline: none;
+  }
+  
+  .profile-form textarea::placeholder {
+    color: #aaa;
+  }

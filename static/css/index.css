@@ -1,0 +1,341 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #fff;
+  }
+  
+  html, body {
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5vw;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .searchBar {
+    flex-grow: 1;
+    max-width: 600px;
+    margin: 0 20px;
+    display: flex;
+    height: 35px;
+    background: #e4e4e4;
+    border: 2px solid gray;
+    border-radius: 20px;
+    padding: 0 10px;
+  }
+  
+  .searchBar input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: gray;
+    padding-left: 10px;
+  }
+  
+  .searchBar input::placeholder {
+    color: gray;
+  }
+  
+  .searchBar button {
+    width: 35px;
+    height: 100%;
+    background: #303030;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  
+  .searchBar button i {
+    font-size: 22px;
+    color: #e0e0e0;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .auth-btn {
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    background: linear-gradient(135deg, #7F7FD5, #86A8E7, #91EAE4);
+    color: white;
+    box-shadow: 0 0 12px rgba(130, 200, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .auth-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+  }
+  
+  .user-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .username-label {
+    cursor: pointer;
+    background: linear-gradient(135deg, #7F7FD5, #86A8E7, #91EAE4);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 0 12px rgba(130, 200, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .username-label:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: #2c2c2c;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 100;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+  
+  .dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .dropdown-item {
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #444;
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .searchBar {
+      margin: 10px 0;
+      width: 90%;
+    }
+  
+    .auth-buttons {
+      justify-content: center;
+    }
+  }
+
+  .user-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .username-label {
+    cursor: pointer;
+    background: linear-gradient(135deg, #7F7FD5, #86A8E7, #91EAE4);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 0 12px rgba(130, 200, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .username-label:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background-color: #2c2c2c;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+  
+  .dropdown-menu.show {
+    display: block;
+  }
+  
+  .dropdown-item {
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #444;
+  }
+
+  .auth-btn {
+    cursor: pointer;
+    background: linear-gradient(135deg, #eeee3e, #c1ef36, #f6d42d);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 0 12px rgba(252, 200, 87, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .auth-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+  }
+  .x{
+    background: transparent;
+  }
+
+  .meme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .meme-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .meme-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .meme-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .meme-info {
+    padding: 1rem;
+  }
+  
+  .meme-info h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .meme-info .desc {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  .meta {
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  .meme-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 一排四個 */
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .meme-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .meme-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;       /* 正方形 */
+    object-fit: contain;       /* 完整顯示圖片 */
+    background: #eee;          /* 沒圖時底色 */
+  }
+  
+  .meme-info {
+    padding: 10px;
+  }
+  
+  .meme-info h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .meme-info .desc {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .meta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .meme-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .meme-grid {
+      grid-template-columns: 1fr;
+    }
+  }
