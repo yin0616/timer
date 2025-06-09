@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector('form');  // ✅ from → form
+    const form = document.querySelector('form');  
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-    const profileBlock = document.querySelector('.profile-block');  // ✅ getElementById → querySelector，.開頭是 class 選擇器
+    const profileBlock = document.querySelector('.profile-block');  
     const themeBtn = document.getElementById("theme-toggle");
     const icon = themeBtn.querySelector("i");
     
@@ -36,35 +36,35 @@ document.addEventListener("DOMContentLoaded", function () {
     let msgbox = document.createElement("div");
     msgbox.style.margin = "10px 0";
     msgbox.style.fontSize = "14px";
-    form.insertBefore(msgbox, form.querySelector("button"));  // ✅ from → form，botton → button
+    form.insertBefore(msgbox, form.querySelector("button"));  
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const username = usernameInput.value.trim();  // ✅ .Value → .value
+        const username = usernameInput.value.trim(); 
         const password = passwordInput.value;
 
         msgbox.textContent = "";
-        msgbox.style.color = "#fff";  // ✅ "fff" → "#fff"
+        msgbox.style.color = "#fff"; 
 
         const res = await fetch('/signup', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },  // ✅ 'content-Type' → 'Content-Type'
+            headers: { 'Content-Type': 'application/json' }, 
             body: JSON.stringify({ username, password })
         });
 
         const result = await res.json();
 
         if (result.success) {
-            msgbox.textContent = "✅註冊成功！請前往登入頁。";
+            msgbox.textContent = "註冊成功！請前往登入頁。";
             msgbox.style.color = '#6f6';
             form.reset();
             setTimeout(() => {
                 window.location.href = "/";  // 成功跳轉登入頁
             }, 1500);
         } else {
-            msgbox.textContent = "❌ " + (result.message || "註冊失敗");  // ✅ sgBox → msgbox
-            msgbox.style.color = "#f66";  // ✅ msgBox → msgbox
+            msgbox.textContent = "X " + (result.message || "註冊失敗"); 
+            msgbox.style.color = "#f66";  
             usernameInput.style.border = "1px solid #f66";
         }
     });
