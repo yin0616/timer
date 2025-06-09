@@ -187,6 +187,10 @@ def upload_meme():
 
 
 @app.route('/')
+def landing():
+    return render_template('landing.html', username=session.get('username'))
+
+@app.route('/home')
 def home():
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
