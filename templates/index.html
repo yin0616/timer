@@ -56,6 +56,55 @@
       display: flex;
       align-items: center;
     }
+
+    .meme-modal {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 999;
+    }
+
+    .meme-modal-content {
+      display: flex;
+      background: #fff;
+      color: #000;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 800px;
+      width: 90%;
+    }
+
+    .modal-body {
+      display: flex;
+      gap: 20px;
+    }
+
+    .modal-body img {
+      max-width: 300px;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .modal-info h2 {
+      margin: 0 0 10px 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -99,17 +148,36 @@
 
   <div class="meme-grid">
     {% for meme in memes %}
-    <div class="meme-card">
+    <div class="meme-card"
+         onclick="openModal(this)"
+         data-title="{{ meme.title }}"
+         data-description="{{ meme.description }}"
+         data-image="{{ meme.image_path }}"
+         data-meta="👤 {{ meme.username or '匿名' }} ‧ 🕒 {{ meme.upload_time[:10] }}">
       <img src="{{ meme.image_path }}" alt="{{ meme.title }}">
       <div class="meme-info">
         <h3>{{ meme.title }}</h3>
-        <p class="desc">{{ meme.description }}</p>
         <div class="meta">
           👤 {{ meme.username or '匿名' }} ‧ 🕒 {{ meme.upload_time[:10] }}
         </div>
       </div>
     </div>
     {% endfor %}
+  </div>
+
+  <!-- Modal 彈窗 -->
+  <div class="meme-modal" id="memeModal" style="display:none;">
+    <div class="meme-modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="meme image">
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p id="modalDescription"></p>
+          <div class="meta" id="modalMeta"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -158,7 +226,23 @@
         sidebar.classList.remove("open");
       }
     });
+
+    function openModal(card) {
+      document.getElementById('modalTitle').textContent = card.dataset.title;
+      document.getElementById('modalDescription').textContent = card.dataset.description;
+      document.getElementById('modalImage').src = card.dataset.image;
+      document.getElementById('modalMeta').textContent = card.dataset.meta;
+      document.getElementById('memeModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('memeModal').style.display = 'none';
+    }
     
+    document.getElementById('memeModal').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+
   </script>
 </body>
 </html>
